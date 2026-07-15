@@ -1,0 +1,1354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HabitFlow | Premium Habit Tracker</title>
+    <meta name="description" content="A modern, premium habit tracker to build streaks, earn XP, and reach your goals.">
+
+    <!-- Google Fonts: Poppins -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer">
+
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- ==================== APP WRAPPER ==================== -->
+    <div class="app-wrapper" id="appWrapper">
+
+        <!-- ==================== SIDEBAR NAVIGATION ==================== -->
+        <aside class="sidebar" id="sidebar">
+            <!-- Sidebar Header: Logo + App Name -->
+            <div class="sidebar-header">
+                <div class="logo-box">
+                    <i class="fa-solid fa-seedling logo-icon"></i>
+                </div>
+                <span class="app-name">HabitFlow</span>
+                <button class="sidebar-toggle-btn" id="sidebarToggleBtn" aria-label="Collapse sidebar">
+                    <i class="fa-solid fa-angles-left"></i>
+                </button>
+            </div>
+
+            <!-- Sidebar Main Navigation Menu -->
+            <nav class="sidebar-nav" aria-label="Primary navigation">
+                <ul class="nav-menu">
+                    <li class="nav-item active">
+                        <a href="#dashboard" class="nav-link" data-section="dashboard">
+                            <i class="fa-solid fa-gauge-high nav-icon"></i>
+                            <span class="nav-text">Dashboard</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#todays-habits" class="nav-link" data-section="todays-habits">
+                            <i class="fa-solid fa-list-check nav-icon"></i>
+                            <span class="nav-text">Today's Habits</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#calendar" class="nav-link" data-section="calendar">
+                            <i class="fa-solid fa-calendar-days nav-icon"></i>
+                            <span class="nav-text">Calendar</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#statistics" class="nav-link" data-section="statistics">
+                            <i class="fa-solid fa-chart-line nav-icon"></i>
+                            <span class="nav-text">Statistics</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#achievements" class="nav-link" data-section="achievements">
+                            <i class="fa-solid fa-trophy nav-icon"></i>
+                            <span class="nav-text">Achievements</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#journal" class="nav-link" data-section="journal">
+                            <i class="fa-solid fa-book-open nav-icon"></i>
+                            <span class="nav-text">Journal</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#settings" class="nav-link" data-section="settings" data-modal-target="settingsModal">
+                            <i class="fa-solid fa-gear nav-icon"></i>
+                            <span class="nav-text">Settings</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+
+            <!-- Sidebar Footer: User Profile Card -->
+            <div class="sidebar-footer">
+                <div class="user-profile-card" id="userProfileCard">
+                    <div class="profile-picture-placeholder" aria-hidden="true">
+                        <i class="fa-solid fa-user"></i>
+                    </div>
+                    <div class="profile-info">
+                        <p class="profile-username">Jeeva Murugan</p>
+                        <p class="profile-level">
+                            <i class="fa-solid fa-star level-star"></i>
+                            <span class="level-text">Level 12</span>
+                        </p>
+                        <div class="xp-progress-track" role="progressbar" aria-label="XP progress to next level" aria-valuenow="65" aria-valuemin="0" aria-valuemax="100">
+                            <div class="xp-progress-fill" style="width: 65%;"></div>
+                        </div>
+                        <p class="xp-progress-label">650 / 1000 XP</p>
+                    </div>
+                    <button class="logout-btn" id="logoutBtn" aria-label="Logout of HabitFlow">
+                        <i class="fa-solid fa-right-from-bracket"></i>
+                    </button>
+                </div>
+            </div>
+        </aside>
+
+        <!-- ==================== MAIN CONTENT WRAPPER ==================== -->
+        <div class="main-content-wrapper">
+
+            <!-- ==================== TOP NAVIGATION BAR ==================== -->
+            <header class="topbar" id="topbar">
+                <div class="topbar-left">
+                    <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Open sidebar menu">
+                        <i class="fa-solid fa-bars"></i>
+                    </button>
+                    <div class="greeting-block">
+                        <h1 class="greeting-text">Good Morning <span class="wave-emoji" aria-hidden="true">👋</span></h1>
+                        <p class="date-time-text">
+                            <span class="current-date" id="currentDate">Wednesday, July 15, 2026</span>
+                            <span class="date-time-separator">•</span>
+                            <span class="current-time" id="currentTime">09:41 AM</span>
+                        </p>
+                    </div>
+                </div>
+
+                <div class="topbar-center">
+                    <form class="search-form" role="search" action="#" method="get">
+                        <label for="globalSearch" class="visually-hidden">Search habits, journal, achievements</label>
+                        <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                        <input type="search" id="globalSearch" name="q" class="search-input" placeholder="Search habits, journal entries...">
+                    </form>
+                </div>
+
+                <div class="topbar-right">
+                    <button class="icon-btn notification-btn" id="notificationBtn" aria-label="View notifications">
+                        <i class="fa-solid fa-bell"></i>
+                        <span class="notification-badge" id="notificationBadge">3</span>
+                    </button>
+
+                    <button class="icon-btn theme-toggle-btn" id="themeToggleBtn" aria-label="Toggle dark mode" aria-pressed="false">
+                        <i class="fa-solid fa-moon"></i>
+                    </button>
+
+                    <button class="user-avatar-btn" id="userAvatarBtn" aria-label="Open user menu">
+                        <span class="user-avatar-placeholder">JM</span>
+                    </button>
+                </div>
+            </header>
+
+            <!-- ==================== MAIN DASHBOARD ==================== -->
+            <main class="main-dashboard" id="mainDashboard">
+
+                <!-- ========== DASHBOARD SECTION ========== -->
+                <section class="dashboard-section" id="dashboard" aria-labelledby="dashboard-heading">
+                    <h2 id="dashboard-heading" class="visually-hidden">Dashboard</h2>
+
+                    <!-- ----- Welcome Card ----- -->
+                    <article class="welcome-card" id="welcomeCard">
+                        <div class="welcome-card-content">
+                            <p class="welcome-eyebrow">Welcome back</p>
+                            <h2 class="welcome-heading">Let's make today count, Jeeva.</h2>
+                            <blockquote class="motivational-quote" id="motivationalQuote">
+                                "Small daily improvements are the key to staggering long-term results."
+                            </blockquote>
+
+                            <div class="welcome-stats-row">
+                                <div class="welcome-stat">
+                                    <i class="fa-solid fa-fire welcome-stat-icon streak-icon"></i>
+                                    <div>
+                                        <p class="welcome-stat-value" id="currentStreakValue">14</p>
+                                        <p class="welcome-stat-label">Current Streak</p>
+                                    </div>
+                                </div>
+                                <div class="welcome-stat">
+                                    <i class="fa-solid fa-medal welcome-stat-icon longest-streak-icon"></i>
+                                    <div>
+                                        <p class="welcome-stat-value" id="longestStreakValue">42</p>
+                                        <p class="welcome-stat-label">Longest Streak</p>
+                                    </div>
+                                </div>
+                                <div class="welcome-stat">
+                                    <i class="fa-solid fa-percent welcome-stat-icon completion-icon"></i>
+                                    <div>
+                                        <p class="welcome-stat-value" id="todayCompletionValue">80%</p>
+                                        <p class="welcome-stat-label">Today's Completion</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Circular Progress Placeholder -->
+                        <div class="circular-progress-placeholder" id="dashboardCircularProgress" role="img" aria-label="80 percent of today's habits completed">
+                            <span class="circular-progress-value">80%</span>
+                            <span class="circular-progress-caption">Today</span>
+                        </div>
+                    </article>
+
+                    <!-- ----- Quick Stats ----- -->
+                    <div class="quick-stats-grid" id="quickStats">
+                        <article class="stat-card" id="habitsCompletedCard">
+                            <div class="stat-card-icon-box completed-box">
+                                <i class="fa-solid fa-circle-check"></i>
+                            </div>
+                            <div class="stat-card-info">
+                                <p class="stat-card-title">Habits Completed</p>
+                                <p class="stat-card-number" id="habitsCompletedNumber">4</p>
+                            </div>
+                        </article>
+
+                        <article class="stat-card" id="totalHabitsCard">
+                            <div class="stat-card-icon-box total-box">
+                                <i class="fa-solid fa-layer-group"></i>
+                            </div>
+                            <div class="stat-card-info">
+                                <p class="stat-card-title">Total Habits</p>
+                                <p class="stat-card-number" id="totalHabitsNumber">6</p>
+                            </div>
+                        </article>
+
+                        <article class="stat-card" id="currentStreakCard">
+                            <div class="stat-card-icon-box streak-box">
+                                <i class="fa-solid fa-fire"></i>
+                            </div>
+                            <div class="stat-card-info">
+                                <p class="stat-card-title">Current Streak</p>
+                                <p class="stat-card-number" id="currentStreakNumber">14</p>
+                            </div>
+                        </article>
+
+                        <article class="stat-card" id="xpEarnedCard">
+                            <div class="stat-card-icon-box xp-box">
+                                <i class="fa-solid fa-bolt"></i>
+                            </div>
+                            <div class="stat-card-info">
+                                <p class="stat-card-title">XP Earned Today</p>
+                                <p class="stat-card-number" id="xpEarnedNumber">120</p>
+                            </div>
+                        </article>
+                    </div>
+
+                    <!-- ========== TODAY'S HABITS SECTION ========== -->
+                    <section class="todays-habits-section" id="todays-habits" aria-labelledby="todays-habits-heading">
+                        <div class="section-header">
+                            <h2 id="todays-habits-heading" class="section-heading">Today's Habits</h2>
+                            <div class="section-header-actions">
+                                <button class="btn btn-primary" id="addHabitBtn" data-modal-target="addHabitModal" aria-label="Add a new habit">
+                                    <i class="fa-solid fa-plus"></i>
+                                    <span>Add Habit</span>
+                                </button>
+                                <button class="btn btn-icon-outline" id="filterHabitsBtn" aria-label="Filter habits">
+                                    <i class="fa-solid fa-filter"></i>
+                                    <span>Filter</span>
+                                </button>
+                                <button class="btn btn-icon-outline" id="sortHabitsBtn" aria-label="Sort habits">
+                                    <i class="fa-solid fa-arrow-down-wide-short"></i>
+                                    <span>Sort</span>
+                                </button>
+                                <div class="habit-search-box">
+                                    <label for="habitSearchInput" class="visually-hidden">Search habits</label>
+                                    <i class="fa-solid fa-magnifying-glass"></i>
+                                    <input type="search" id="habitSearchInput" placeholder="Search habits...">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Habit Cards List -->
+                        <ul class="habit-cards-list" id="habitCardsList">
+
+                            <!-- Habit Card 1 -->
+                            <li class="habit-card" data-habit-id="1">
+                                <div class="habit-card-main">
+                                    <label class="habit-checkbox-wrapper">
+                                        <input type="checkbox" class="habit-checkbox" id="habitCheck1" aria-label="Mark Drink Water as complete">
+                                        <span class="habit-checkbox-custom"></span>
+                                    </label>
+                                    <div class="habit-icon-box water-icon-box" aria-hidden="true">
+                                        <i class="fa-solid fa-glass-water"></i>
+                                    </div>
+                                    <div class="habit-details">
+                                        <h3 class="habit-name">Drink Water</h3>
+                                        <div class="habit-meta">
+                                            <span class="habit-category-tag">Health</span>
+                                            <span class="habit-meta-item"><i class="fa-solid fa-repeat"></i> Daily</span>
+                                            <span class="habit-meta-item"><i class="fa-regular fa-clock"></i> 08:00 AM</span>
+                                        </div>
+                                        <div class="habit-progress-row">
+                                            <div class="progress-bar-placeholder" role="progressbar" aria-label="Drink water progress" aria-valuenow="6" aria-valuemin="0" aria-valuemax="8">
+                                                <div class="progress-bar-fill" style="width: 75%;"></div>
+                                            </div>
+                                            <span class="habit-progress-text"><span class="current-progress">6</span> / <span class="target-goal">8 glasses</span></span>
+                                        </div>
+                                        <div class="habit-streak-row">
+                                            <span class="habit-streak-badge"><i class="fa-solid fa-fire"></i> Streak: <span class="current-streak">14</span></span>
+                                            <span class="habit-streak-badge"><i class="fa-solid fa-medal"></i> Best: <span class="longest-streak">30</span></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="habit-card-actions">
+                                    <button class="habit-action-btn" aria-label="Edit Drink Water habit" data-modal-target="editHabitModal">
+                                        <i class="fa-solid fa-pen"></i>
+                                    </button>
+                                    <button class="habit-action-btn" aria-label="Delete Drink Water habit" data-modal-target="deleteConfirmModal">
+                                        <i class="fa-solid fa-trash"></i>
+                                    </button>
+                                    <button class="habit-action-btn" aria-label="Archive Drink Water habit">
+                                        <i class="fa-solid fa-box-archive"></i>
+                                    </button>
+                                    <button class="habit-action-btn favorite-btn" aria-label="Mark Drink Water as favorite" aria-pressed="false">
+                                        <i class="fa-regular fa-star"></i>
+                                    </button>
+                                    <button class="habit-action-btn" aria-label="View notes for Drink Water">
+                                        <i class="fa-regular fa-note-sticky"></i>
+                                    </button>
+                                </div>
+                            </li>
+
+                            <!-- Habit Card 2 -->
+                            <li class="habit-card" data-habit-id="2">
+                                <div class="habit-card-main">
+                                    <label class="habit-checkbox-wrapper">
+                                        <input type="checkbox" class="habit-checkbox" id="habitCheck2" aria-label="Mark Morning Run as complete">
+                                        <span class="habit-checkbox-custom"></span>
+                                    </label>
+                                    <div class="habit-icon-box fitness-icon-box" aria-hidden="true">
+                                        <i class="fa-solid fa-person-running"></i>
+                                    </div>
+                                    <div class="habit-details">
+                                        <h3 class="habit-name">Morning Run</h3>
+                                        <div class="habit-meta">
+                                            <span class="habit-category-tag">Fitness</span>
+                                            <span class="habit-meta-item"><i class="fa-solid fa-repeat"></i> Daily</span>
+                                            <span class="habit-meta-item"><i class="fa-regular fa-clock"></i> 06:30 AM</span>
+                                        </div>
+                                        <div class="habit-progress-row">
+                                            <div class="progress-bar-placeholder" role="progressbar" aria-label="Morning run progress" aria-valuenow="1" aria-valuemin="0" aria-valuemax="1">
+                                                <div class="progress-bar-fill" style="width: 100%;"></div>
+                                            </div>
+                                            <span class="habit-progress-text"><span class="current-progress">1</span> / <span class="target-goal">1 run</span></span>
+                                        </div>
+                                        <div class="habit-streak-row">
+                                            <span class="habit-streak-badge"><i class="fa-solid fa-fire"></i> Streak: <span class="current-streak">9</span></span>
+                                            <span class="habit-streak-badge"><i class="fa-solid fa-medal"></i> Best: <span class="longest-streak">21</span></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="habit-card-actions">
+                                    <button class="habit-action-btn" aria-label="Edit Morning Run habit" data-modal-target="editHabitModal">
+                                        <i class="fa-solid fa-pen"></i>
+                                    </button>
+                                    <button class="habit-action-btn" aria-label="Delete Morning Run habit" data-modal-target="deleteConfirmModal">
+                                        <i class="fa-solid fa-trash"></i>
+                                    </button>
+                                    <button class="habit-action-btn" aria-label="Archive Morning Run habit">
+                                        <i class="fa-solid fa-box-archive"></i>
+                                    </button>
+                                    <button class="habit-action-btn favorite-btn" aria-label="Mark Morning Run as favorite" aria-pressed="true">
+                                        <i class="fa-solid fa-star"></i>
+                                    </button>
+                                    <button class="habit-action-btn" aria-label="View notes for Morning Run">
+                                        <i class="fa-regular fa-note-sticky"></i>
+                                    </button>
+                                </div>
+                            </li>
+
+                            <!-- Habit Card 3 -->
+                            <li class="habit-card" data-habit-id="3">
+                                <div class="habit-card-main">
+                                    <label class="habit-checkbox-wrapper">
+                                        <input type="checkbox" class="habit-checkbox" id="habitCheck3" aria-label="Mark Read a Book as complete">
+                                        <span class="habit-checkbox-custom"></span>
+                                    </label>
+                                    <div class="habit-icon-box reading-icon-box" aria-hidden="true">
+                                        <i class="fa-solid fa-book"></i>
+                                    </div>
+                                    <div class="habit-details">
+                                        <h3 class="habit-name">Read a Book</h3>
+                                        <div class="habit-meta">
+                                            <span class="habit-category-tag">Learning</span>
+                                            <span class="habit-meta-item"><i class="fa-solid fa-repeat"></i> Daily</span>
+                                            <span class="habit-meta-item"><i class="fa-regular fa-clock"></i> 09:00 PM</span>
+                                        </div>
+                                        <div class="habit-progress-row">
+                                            <div class="progress-bar-placeholder" role="progressbar" aria-label="Reading progress" aria-valuenow="20" aria-valuemin="0" aria-valuemax="30">
+                                                <div class="progress-bar-fill" style="width: 66%;"></div>
+                                            </div>
+                                            <span class="habit-progress-text"><span class="current-progress">20</span> / <span class="target-goal">30 pages</span></span>
+                                        </div>
+                                        <div class="habit-streak-row">
+                                            <span class="habit-streak-badge"><i class="fa-solid fa-fire"></i> Streak: <span class="current-streak">5</span></span>
+                                            <span class="habit-streak-badge"><i class="fa-solid fa-medal"></i> Best: <span class="longest-streak">18</span></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="habit-card-actions">
+                                    <button class="habit-action-btn" aria-label="Edit Read a Book habit" data-modal-target="editHabitModal">
+                                        <i class="fa-solid fa-pen"></i>
+                                    </button>
+                                    <button class="habit-action-btn" aria-label="Delete Read a Book habit" data-modal-target="deleteConfirmModal">
+                                        <i class="fa-solid fa-trash"></i>
+                                    </button>
+                                    <button class="habit-action-btn" aria-label="Archive Read a Book habit">
+                                        <i class="fa-solid fa-box-archive"></i>
+                                    </button>
+                                    <button class="habit-action-btn favorite-btn" aria-label="Mark Read a Book as favorite" aria-pressed="false">
+                                        <i class="fa-regular fa-star"></i>
+                                    </button>
+                                    <button class="habit-action-btn" aria-label="View notes for Read a Book">
+                                        <i class="fa-regular fa-note-sticky"></i>
+                                    </button>
+                                </div>
+                            </li>
+
+                            <!-- Habit Card 4 -->
+                            <li class="habit-card" data-habit-id="4">
+                                <div class="habit-card-main">
+                                    <label class="habit-checkbox-wrapper">
+                                        <input type="checkbox" class="habit-checkbox" id="habitCheck4" aria-label="Mark Meditate as complete">
+                                        <span class="habit-checkbox-custom"></span>
+                                    </label>
+                                    <div class="habit-icon-box mindfulness-icon-box" aria-hidden="true">
+                                        <i class="fa-solid fa-spa"></i>
+                                    </div>
+                                    <div class="habit-details">
+                                        <h3 class="habit-name">Meditate</h3>
+                                        <div class="habit-meta">
+                                            <span class="habit-category-tag">Mindfulness</span>
+                                            <span class="habit-meta-item"><i class="fa-solid fa-repeat"></i> Daily</span>
+                                            <span class="habit-meta-item"><i class="fa-regular fa-clock"></i> 07:00 AM</span>
+                                        </div>
+                                        <div class="habit-progress-row">
+                                            <div class="progress-bar-placeholder" role="progressbar" aria-label="Meditation progress" aria-valuenow="10" aria-valuemin="0" aria-valuemax="10">
+                                                <div class="progress-bar-fill" style="width: 100%;"></div>
+                                            </div>
+                                            <span class="habit-progress-text"><span class="current-progress">10</span> / <span class="target-goal">10 minutes</span></span>
+                                        </div>
+                                        <div class="habit-streak-row">
+                                            <span class="habit-streak-badge"><i class="fa-solid fa-fire"></i> Streak: <span class="current-streak">30</span></span>
+                                            <span class="habit-streak-badge"><i class="fa-solid fa-medal"></i> Best: <span class="longest-streak">30</span></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="habit-card-actions">
+                                    <button class="habit-action-btn" aria-label="Edit Meditate habit" data-modal-target="editHabitModal">
+                                        <i class="fa-solid fa-pen"></i>
+                                    </button>
+                                    <button class="habit-action-btn" aria-label="Delete Meditate habit" data-modal-target="deleteConfirmModal">
+                                        <i class="fa-solid fa-trash"></i>
+                                    </button>
+                                    <button class="habit-action-btn" aria-label="Archive Meditate habit">
+                                        <i class="fa-solid fa-box-archive"></i>
+                                    </button>
+                                    <button class="habit-action-btn favorite-btn" aria-label="Mark Meditate as favorite" aria-pressed="false">
+                                        <i class="fa-regular fa-star"></i>
+                                    </button>
+                                    <button class="habit-action-btn" aria-label="View notes for Meditate">
+                                        <i class="fa-regular fa-note-sticky"></i>
+                                    </button>
+                                </div>
+                            </li>
+
+                            <!-- Habit Card 5 -->
+                            <li class="habit-card" data-habit-id="5">
+                                <div class="habit-card-main">
+                                    <label class="habit-checkbox-wrapper">
+                                        <input type="checkbox" class="habit-checkbox" id="habitCheck5" aria-label="Mark No Junk Food as complete">
+                                        <span class="habit-checkbox-custom"></span>
+                                    </label>
+                                    <div class="habit-icon-box nutrition-icon-box" aria-hidden="true">
+                                        <i class="fa-solid fa-carrot"></i>
+                                    </div>
+                                    <div class="habit-details">
+                                        <h3 class="habit-name">No Junk Food</h3>
+                                        <div class="habit-meta">
+                                            <span class="habit-category-tag">Nutrition</span>
+                                            <span class="habit-meta-item"><i class="fa-solid fa-repeat"></i> Weekdays</span>
+                                            <span class="habit-meta-item"><i class="fa-regular fa-clock"></i> All Day</span>
+                                        </div>
+                                        <div class="habit-progress-row">
+                                            <div class="progress-bar-placeholder" role="progressbar" aria-label="No junk food progress" aria-valuenow="0" aria-valuemin="0" aria-valuemax="1">
+                                                <div class="progress-bar-fill" style="width: 0%;"></div>
+                                            </div>
+                                            <span class="habit-progress-text"><span class="current-progress">0</span> / <span class="target-goal">1 day</span></span>
+                                        </div>
+                                        <div class="habit-streak-row">
+                                            <span class="habit-streak-badge"><i class="fa-solid fa-fire"></i> Streak: <span class="current-streak">2</span></span>
+                                            <span class="habit-streak-badge"><i class="fa-solid fa-medal"></i> Best: <span class="longest-streak">12</span></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="habit-card-actions">
+                                    <button class="habit-action-btn" aria-label="Edit No Junk Food habit" data-modal-target="editHabitModal">
+                                        <i class="fa-solid fa-pen"></i>
+                                    </button>
+                                    <button class="habit-action-btn" aria-label="Delete No Junk Food habit" data-modal-target="deleteConfirmModal">
+                                        <i class="fa-solid fa-trash"></i>
+                                    </button>
+                                    <button class="habit-action-btn" aria-label="Archive No Junk Food habit">
+                                        <i class="fa-solid fa-box-archive"></i>
+                                    </button>
+                                    <button class="habit-action-btn favorite-btn" aria-label="Mark No Junk Food as favorite" aria-pressed="false">
+                                        <i class="fa-regular fa-star"></i>
+                                    </button>
+                                    <button class="habit-action-btn" aria-label="View notes for No Junk Food">
+                                        <i class="fa-regular fa-note-sticky"></i>
+                                    </button>
+                                </div>
+                            </li>
+
+                            <!-- Habit Card 6 -->
+                            <li class="habit-card" data-habit-id="6">
+                                <div class="habit-card-main">
+                                    <label class="habit-checkbox-wrapper">
+                                        <input type="checkbox" class="habit-checkbox" id="habitCheck6" aria-label="Mark Journal Writing as complete">
+                                        <span class="habit-checkbox-custom"></span>
+                                    </label>
+                                    <div class="habit-icon-box journal-icon-box" aria-hidden="true">
+                                        <i class="fa-solid fa-pen-nib"></i>
+                                    </div>
+                                    <div class="habit-details">
+                                        <h3 class="habit-name">Journal Writing</h3>
+                                        <div class="habit-meta">
+                                            <span class="habit-category-tag">Personal Growth</span>
+                                            <span class="habit-meta-item"><i class="fa-solid fa-repeat"></i> Daily</span>
+                                            <span class="habit-meta-item"><i class="fa-regular fa-clock"></i> 10:00 PM</span>
+                                        </div>
+                                        <div class="habit-progress-row">
+                                            <div class="progress-bar-placeholder" role="progressbar" aria-label="Journal writing progress" aria-valuenow="0" aria-valuemin="0" aria-valuemax="1">
+                                                <div class="progress-bar-fill" style="width: 0%;"></div>
+                                            </div>
+                                            <span class="habit-progress-text"><span class="current-progress">0</span> / <span class="target-goal">1 entry</span></span>
+                                        </div>
+                                        <div class="habit-streak-row">
+                                            <span class="habit-streak-badge"><i class="fa-solid fa-fire"></i> Streak: <span class="current-streak">7</span></span>
+                                            <span class="habit-streak-badge"><i class="fa-solid fa-medal"></i> Best: <span class="longest-streak">15</span></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="habit-card-actions">
+                                    <button class="habit-action-btn" aria-label="Edit Journal Writing habit" data-modal-target="editHabitModal">
+                                        <i class="fa-solid fa-pen"></i>
+                                    </button>
+                                    <button class="habit-action-btn" aria-label="Delete Journal Writing habit" data-modal-target="deleteConfirmModal">
+                                        <i class="fa-solid fa-trash"></i>
+                                    </button>
+                                    <button class="habit-action-btn" aria-label="Archive Journal Writing habit">
+                                        <i class="fa-solid fa-box-archive"></i>
+                                    </button>
+                                    <button class="habit-action-btn favorite-btn" aria-label="Mark Journal Writing as favorite" aria-pressed="false">
+                                        <i class="fa-regular fa-star"></i>
+                                    </button>
+                                    <button class="habit-action-btn" aria-label="View notes for Journal Writing">
+                                        <i class="fa-regular fa-note-sticky"></i>
+                                    </button>
+                                </div>
+                            </li>
+                        </ul>
+                    </section>
+
+                    <!-- ========== PROGRESS SECTION ========== -->
+                    <section class="progress-section" id="progress" aria-labelledby="progress-heading">
+                        <div class="section-header">
+                            <h2 id="progress-heading" class="section-heading">Progress Overview</h2>
+                        </div>
+
+                        <div class="progress-cards-grid">
+                            <!-- Daily Progress -->
+                            <article class="progress-card" id="dailyProgressCard">
+                                <h3 class="progress-card-title">Daily Progress</h3>
+                                <div class="chart-placeholder daily-chart-placeholder" role="img" aria-label="Daily progress chart placeholder" data-chart-type="daily"></div>
+                                <p class="progress-card-percentage">80%</p>
+                                <p class="progress-card-label">Completion Today</p>
+                            </article>
+
+                            <!-- Weekly Progress -->
+                            <article class="progress-card" id="weeklyProgressCard">
+                                <h3 class="progress-card-title">Weekly Progress</h3>
+                                <div class="chart-placeholder weekly-chart-placeholder" role="img" aria-label="Weekly progress chart placeholder" data-chart-type="weekly"></div>
+                                <p class="progress-card-percentage">72%</p>
+                                <p class="progress-card-label">Completion This Week</p>
+                            </article>
+
+                            <!-- Monthly Progress -->
+                            <article class="progress-card" id="monthlyProgressCard">
+                                <h3 class="progress-card-title">Monthly Progress</h3>
+                                <div class="chart-placeholder monthly-chart-placeholder" role="img" aria-label="Monthly progress chart placeholder" data-chart-type="monthly"></div>
+                                <p class="progress-card-percentage">68%</p>
+                                <p class="progress-card-label">Completion This Month</p>
+                            </article>
+
+                            <!-- Yearly Progress -->
+                            <article class="progress-card" id="yearlyProgressCard">
+                                <h3 class="progress-card-title">Yearly Progress</h3>
+                                <div class="chart-placeholder yearly-chart-placeholder" role="img" aria-label="Yearly progress chart placeholder" data-chart-type="yearly"></div>
+                                <p class="progress-card-percentage">61%</p>
+                                <p class="progress-card-label">Completion This Year</p>
+                            </article>
+                        </div>
+                    </section>
+
+                    <!-- ========== HEATMAP SECTION ========== -->
+                    <section class="heatmap-section" id="heatmap" aria-labelledby="heatmap-heading">
+                        <div class="section-header">
+                            <h2 id="heatmap-heading" class="section-heading">Habit Heatmap</h2>
+                        </div>
+                        <div class="heatmap-card">
+                            <!-- GitHub-style contribution grid placeholder -->
+                            <div class="heatmap-grid-placeholder" id="heatmapGrid" role="img" aria-label="Habit completion heatmap for the past year">
+                                <!-- Populated dynamically later; static placeholder columns for structure -->
+                                <div class="heatmap-column" aria-hidden="true"></div>
+                                <div class="heatmap-column" aria-hidden="true"></div>
+                                <div class="heatmap-column" aria-hidden="true"></div>
+                                <div class="heatmap-column" aria-hidden="true"></div>
+                                <div class="heatmap-column" aria-hidden="true"></div>
+                                <div class="heatmap-column" aria-hidden="true"></div>
+                                <div class="heatmap-column" aria-hidden="true"></div>
+                                <div class="heatmap-column" aria-hidden="true"></div>
+                                <div class="heatmap-column" aria-hidden="true"></div>
+                                <div class="heatmap-column" aria-hidden="true"></div>
+                                <div class="heatmap-column" aria-hidden="true"></div>
+                                <div class="heatmap-column" aria-hidden="true"></div>
+                            </div>
+                            <div class="heatmap-legend">
+                                <span class="heatmap-legend-label">Less</span>
+                                <span class="heatmap-legend-swatch level-0" aria-hidden="true"></span>
+                                <span class="heatmap-legend-swatch level-1" aria-hidden="true"></span>
+                                <span class="heatmap-legend-swatch level-2" aria-hidden="true"></span>
+                                <span class="heatmap-legend-swatch level-3" aria-hidden="true"></span>
+                                <span class="heatmap-legend-swatch level-4" aria-hidden="true"></span>
+                                <span class="heatmap-legend-label">More</span>
+                            </div>
+                        </div>
+                    </section>
+                </section>
+
+                <!-- ========== CALENDAR SECTION ========== -->
+                <section class="calendar-section" id="calendar" aria-labelledby="calendar-heading">
+                    <div class="section-header">
+                        <h2 id="calendar-heading" class="section-heading">Monthly Calendar</h2>
+                    </div>
+
+                    <div class="calendar-card">
+                        <div class="calendar-nav">
+                            <button class="calendar-nav-btn" id="prevMonthBtn" aria-label="Go to previous month">
+                                <i class="fa-solid fa-chevron-left"></i>
+                            </button>
+                            <h3 class="calendar-current-month" id="calendarCurrentMonth">July 2026</h3>
+                            <button class="calendar-nav-btn" id="nextMonthBtn" aria-label="Go to next month">
+                                <i class="fa-solid fa-chevron-right"></i>
+                            </button>
+                        </div>
+
+                        <!-- Weekday header row -->
+                        <div class="calendar-weekdays" aria-hidden="true">
+                            <span>Sun</span>
+                            <span>Mon</span>
+                            <span>Tue</span>
+                            <span>Wed</span>
+                            <span>Thu</span>
+                            <span>Fri</span>
+                            <span>Sat</span>
+                        </div>
+
+                        <!-- Calendar Grid Placeholder -->
+                        <div class="calendar-grid-placeholder" id="calendarGrid" role="grid" aria-label="Calendar for July 2026">
+                            <!-- Day cells will be generated later -->
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ========== ACHIEVEMENTS SECTION ========== -->
+                <section class="achievements-section" id="achievements" aria-labelledby="achievements-heading">
+                    <div class="section-header">
+                        <h2 id="achievements-heading" class="section-heading">Achievements</h2>
+                    </div>
+
+                    <ul class="achievements-grid" id="achievementsGrid">
+                        <!-- Badge: First Habit -->
+                        <li class="achievement-card unlocked" data-modal-target="achievementDetailsModal">
+                            <div class="achievement-icon-box">
+                                <i class="fa-solid fa-flag-checkered"></i>
+                            </div>
+                            <h3 class="achievement-title">First Habit</h3>
+                            <p class="achievement-description">Created your very first habit.</p>
+                            <span class="achievement-status-placeholder unlocked-status">
+                                <i class="fa-solid fa-lock-open"></i> Unlocked
+                            </span>
+                        </li>
+
+                        <!-- Badge: 7 Day Streak -->
+                        <li class="achievement-card unlocked" data-modal-target="achievementDetailsModal">
+                            <div class="achievement-icon-box">
+                                <i class="fa-solid fa-fire"></i>
+                            </div>
+                            <h3 class="achievement-title">7 Day Streak</h3>
+                            <p class="achievement-description">Kept a habit alive for 7 days straight.</p>
+                            <span class="achievement-status-placeholder unlocked-status">
+                                <i class="fa-solid fa-lock-open"></i> Unlocked
+                            </span>
+                        </li>
+
+                        <!-- Badge: 30 Day Streak -->
+                        <li class="achievement-card unlocked" data-modal-target="achievementDetailsModal">
+                            <div class="achievement-icon-box">
+                                <i class="fa-solid fa-fire-flame-curved"></i>
+                            </div>
+                            <h3 class="achievement-title">30 Day Streak</h3>
+                            <p class="achievement-description">A full month of unbroken consistency.</p>
+                            <span class="achievement-status-placeholder unlocked-status">
+                                <i class="fa-solid fa-lock-open"></i> Unlocked
+                            </span>
+                        </li>
+
+                        <!-- Badge: 100 Days -->
+                        <li class="achievement-card locked" data-modal-target="achievementDetailsModal">
+                            <div class="achievement-icon-box">
+                                <i class="fa-solid fa-gem"></i>
+                            </div>
+                            <h3 class="achievement-title">100 Days</h3>
+                            <p class="achievement-description">Reach a 100 day streak on any habit.</p>
+                            <span class="achievement-status-placeholder locked-status">
+                                <i class="fa-solid fa-lock"></i> Locked
+                            </span>
+                        </li>
+
+                        <!-- Badge: Early Bird -->
+                        <li class="achievement-card locked" data-modal-target="achievementDetailsModal">
+                            <div class="achievement-icon-box">
+                                <i class="fa-solid fa-sun"></i>
+                            </div>
+                            <h3 class="achievement-title">Early Bird</h3>
+                            <p class="achievement-description">Complete 10 habits before 7 AM.</p>
+                            <span class="achievement-status-placeholder locked-status">
+                                <i class="fa-solid fa-lock"></i> Locked
+                            </span>
+                        </li>
+
+                        <!-- Badge: Book Lover -->
+                        <li class="achievement-card locked" data-modal-target="achievementDetailsModal">
+                            <div class="achievement-icon-box">
+                                <i class="fa-solid fa-book-open-reader"></i>
+                            </div>
+                            <h3 class="achievement-title">Book Lover</h3>
+                            <p class="achievement-description">Read for 30 days in a single month.</p>
+                            <span class="achievement-status-placeholder locked-status">
+                                <i class="fa-solid fa-lock"></i> Locked
+                            </span>
+                        </li>
+
+                        <!-- Badge: Fitness Hero -->
+                        <li class="achievement-card locked" data-modal-target="achievementDetailsModal">
+                            <div class="achievement-icon-box">
+                                <i class="fa-solid fa-dumbbell"></i>
+                            </div>
+                            <h3 class="achievement-title">Fitness Hero</h3>
+                            <p class="achievement-description">Complete 50 fitness habit sessions.</p>
+                            <span class="achievement-status-placeholder locked-status">
+                                <i class="fa-solid fa-lock"></i> Locked
+                            </span>
+                        </li>
+                    </ul>
+                </section>
+
+                <!-- ========== JOURNAL SECTION ========== -->
+                <section class="journal-section" id="journal" aria-labelledby="journal-heading">
+                    <div class="section-header">
+                        <h2 id="journal-heading" class="section-heading">Journal</h2>
+                        <div class="section-header-actions">
+                            <button class="btn btn-primary" id="addJournalEntryBtn" data-modal-target="journalEntryModal" aria-label="Add a new journal entry">
+                                <i class="fa-solid fa-plus"></i>
+                                <span>Add Journal Entry</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <ul class="journal-cards-list" id="journalCardsList">
+                        <!-- Journal Entry 1 -->
+                        <li class="journal-card">
+                            <div class="journal-card-header">
+                                <span class="journal-date"><i class="fa-regular fa-calendar"></i> July 14, 2026</span>
+                                <span class="journal-mood-icon" aria-label="Mood: Happy">
+                                    <i class="fa-regular fa-face-smile"></i>
+                                </span>
+                            </div>
+                            <p class="journal-habit-name">Linked Habit: Meditate</p>
+                            <p class="journal-notes-preview">Felt really centered today after the morning session. Managed to stay focused for the full ten minutes without reaching for my phone...</p>
+                            <button class="btn btn-text read-more-btn" aria-label="Read full journal entry for July 14">Read More</button>
+                        </li>
+
+                        <!-- Journal Entry 2 -->
+                        <li class="journal-card">
+                            <div class="journal-card-header">
+                                <span class="journal-date"><i class="fa-regular fa-calendar"></i> July 13, 2026</span>
+                                <span class="journal-mood-icon" aria-label="Mood: Tired">
+                                    <i class="fa-regular fa-face-tired"></i>
+                                </span>
+                            </div>
+                            <p class="journal-habit-name">Linked Habit: Morning Run</p>
+                            <p class="journal-notes-preview">Struggled to get out of bed but pushed through a shorter route. Legs were sore from the previous day but glad I didn't skip...</p>
+                            <button class="btn btn-text read-more-btn" aria-label="Read full journal entry for July 13">Read More</button>
+                        </li>
+
+                        <!-- Journal Entry 3 -->
+                        <li class="journal-card">
+                            <div class="journal-card-header">
+                                <span class="journal-date"><i class="fa-regular fa-calendar"></i> July 12, 2026</span>
+                                <span class="journal-mood-icon" aria-label="Mood: Excited">
+                                    <i class="fa-regular fa-face-laugh-beam"></i>
+                                </span>
+                            </div>
+                            <p class="journal-habit-name">Linked Habit: Read a Book</p>
+                            <p class="journal-notes-preview">Finished a whole chapter in one sitting for the first time in weeks. The story is finally picking up pace and I'm hooked...</p>
+                            <button class="btn btn-text read-more-btn" aria-label="Read full journal entry for July 12">Read More</button>
+                        </li>
+                    </ul>
+                </section>
+
+                <!-- ========== ANALYTICS SECTION ========== -->
+                <section class="analytics-section" id="statistics" aria-labelledby="analytics-heading">
+                    <div class="section-header">
+                        <h2 id="analytics-heading" class="section-heading">Analytics</h2>
+                    </div>
+
+                    <div class="analytics-grid">
+                        <article class="analytics-card" id="completionRateCard">
+                            <h3 class="analytics-card-title">Completion Rate</h3>
+                            <div class="chart-placeholder completion-rate-chart-placeholder" role="img" aria-label="Completion rate chart placeholder" data-chart-type="completion-rate"></div>
+                        </article>
+
+                        <article class="analytics-card" id="habitSuccessRateCard">
+                            <h3 class="analytics-card-title">Habit Success Rate</h3>
+                            <div class="chart-placeholder habit-success-chart-placeholder" role="img" aria-label="Habit success rate chart placeholder" data-chart-type="success-rate"></div>
+                        </article>
+
+                        <article class="analytics-card" id="weeklyTrendCard">
+                            <h3 class="analytics-card-title">Weekly Trend</h3>
+                            <div class="chart-placeholder weekly-trend-chart-placeholder" role="img" aria-label="Weekly trend chart placeholder" data-chart-type="weekly-trend"></div>
+                        </article>
+
+                        <article class="analytics-card" id="monthlyTrendCard">
+                            <h3 class="analytics-card-title">Monthly Trend</h3>
+                            <div class="chart-placeholder monthly-trend-chart-placeholder" role="img" aria-label="Monthly trend chart placeholder" data-chart-type="monthly-trend"></div>
+                        </article>
+
+                        <article class="analytics-card" id="categoryBreakdownCard">
+                            <h3 class="analytics-card-title">Category Breakdown</h3>
+                            <div class="chart-placeholder category-breakdown-chart-placeholder" role="img" aria-label="Category breakdown chart placeholder" data-chart-type="category-breakdown"></div>
+                        </article>
+                    </div>
+                </section>
+
+            </main>
+
+            <!-- ==================== RIGHT SIDEBAR (INSIGHTS) ==================== -->
+            <aside class="right-sidebar" id="rightSidebar" aria-label="Insights panel">
+
+                <!-- Today's Goal -->
+                <article class="insight-card" id="todaysGoalCard">
+                    <h3 class="insight-card-title"><i class="fa-solid fa-bullseye"></i> Today's Goal</h3>
+                    <p class="insight-card-body">Complete 5 out of 6 habits to keep your streak alive.</p>
+                    <div class="insight-progress-track" role="progressbar" aria-label="Today's goal progress" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100">
+                        <div class="insight-progress-fill" style="width: 80%;"></div>
+                    </div>
+                </article>
+
+                <!-- Upcoming Reminders -->
+                <article class="insight-card" id="upcomingRemindersCard">
+                    <h3 class="insight-card-title"><i class="fa-regular fa-bell"></i> Upcoming Reminders</h3>
+                    <ul class="reminders-list">
+                        <li class="reminder-item">
+                            <span class="reminder-time">09:00 PM</span>
+                            <span class="reminder-habit">Read a Book</span>
+                        </li>
+                        <li class="reminder-item">
+                            <span class="reminder-time">10:00 PM</span>
+                            <span class="reminder-habit">Journal Writing</span>
+                        </li>
+                    </ul>
+                </article>
+
+                <!-- Daily Quote -->
+                <article class="insight-card" id="dailyQuoteCard">
+                    <h3 class="insight-card-title"><i class="fa-solid fa-quote-left"></i> Daily Quote</h3>
+                    <blockquote class="insight-card-quote">"You do not rise to the level of your goals. You fall to the level of your systems."</blockquote>
+                    <p class="insight-quote-author">— James Clear</p>
+                </article>
+
+                <!-- AI Habit Coach -->
+                <article class="insight-card ai-coach-card" id="aiHabitCoachCard">
+                    <h3 class="insight-card-title"><i class="fa-solid fa-robot"></i> AI Habit Coach</h3>
+                    <p class="insight-card-body">You're 20% more consistent on days you meditate first. Try leading your morning with it.</p>
+                    <button class="btn btn-secondary" id="askCoachBtn" aria-label="Ask the AI habit coach a question">
+                        <i class="fa-solid fa-comment-dots"></i>
+                        <span>Ask Coach</span>
+                    </button>
+                </article>
+
+                <!-- Suggested Habits -->
+                <article class="insight-card" id="suggestedHabitsCard">
+                    <h3 class="insight-card-title"><i class="fa-solid fa-lightbulb"></i> Suggested Habits</h3>
+                    <ul class="suggested-habits-list">
+                        <li class="suggested-habit-item">
+                            <span class="suggested-habit-name"><i class="fa-solid fa-bed"></i> Sleep by 11 PM</span>
+                            <button class="btn btn-icon-outline btn-sm" aria-label="Add suggested habit: Sleep by 11 PM">
+                                <i class="fa-solid fa-plus"></i>
+                            </button>
+                        </li>
+                        <li class="suggested-habit-item">
+                            <span class="suggested-habit-name"><i class="fa-solid fa-mug-hot"></i> No Caffeine After 4 PM</span>
+                            <button class="btn btn-icon-outline btn-sm" aria-label="Add suggested habit: No Caffeine After 4 PM">
+                                <i class="fa-solid fa-plus"></i>
+                            </button>
+                        </li>
+                    </ul>
+                </article>
+
+                <!-- Water Intake -->
+                <article class="insight-card" id="waterIntakeCard">
+                    <h3 class="insight-card-title"><i class="fa-solid fa-droplet"></i> Water Intake</h3>
+                    <p class="insight-card-metric"><span id="waterIntakeValue">6</span> / 8 glasses</p>
+                    <div class="insight-progress-track" role="progressbar" aria-label="Water intake progress" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">
+                        <div class="insight-progress-fill water-fill" style="width: 75%;"></div>
+                    </div>
+                    <button class="btn btn-icon-outline btn-sm" id="addWaterGlassBtn" aria-label="Add one glass of water">
+                        <i class="fa-solid fa-plus"></i> Add Glass
+                    </button>
+                </article>
+
+                <!-- Sleep Hours -->
+                <article class="insight-card" id="sleepHoursCard">
+                    <h3 class="insight-card-title"><i class="fa-solid fa-moon"></i> Sleep Hours</h3>
+                    <p class="insight-card-metric"><span id="sleepHoursValue">7.5</span> hrs last night</p>
+                    <div class="insight-progress-track" role="progressbar" aria-label="Sleep hours progress toward 8 hour goal" aria-valuenow="94" aria-valuemin="0" aria-valuemax="100">
+                        <div class="insight-progress-fill sleep-fill" style="width: 94%;"></div>
+                    </div>
+                </article>
+
+                <!-- Mood Tracker -->
+                <article class="insight-card" id="moodTrackerCard">
+                    <h3 class="insight-card-title"><i class="fa-regular fa-face-smile"></i> Mood Tracker</h3>
+                    <div class="mood-options" role="group" aria-label="Select today's mood">
+                        <button class="mood-option-btn" aria-label="Mood: Great" aria-pressed="false">
+                            <i class="fa-regular fa-face-laugh-beam"></i>
+                        </button>
+                        <button class="mood-option-btn" aria-label="Mood: Good" aria-pressed="true">
+                            <i class="fa-regular fa-face-smile"></i>
+                        </button>
+                        <button class="mood-option-btn" aria-label="Mood: Okay" aria-pressed="false">
+                            <i class="fa-regular fa-face-meh"></i>
+                        </button>
+                        <button class="mood-option-btn" aria-label="Mood: Tired" aria-pressed="false">
+                            <i class="fa-regular fa-face-tired"></i>
+                        </button>
+                        <button class="mood-option-btn" aria-label="Mood: Sad" aria-pressed="false">
+                            <i class="fa-regular fa-face-frown"></i>
+                        </button>
+                    </div>
+                </article>
+
+                <!-- Pomodoro Timer -->
+                <article class="insight-card pomodoro-card" id="pomodoroTimerCard">
+                    <h3 class="insight-card-title"><i class="fa-solid fa-stopwatch"></i> Pomodoro Timer</h3>
+                    <p class="pomodoro-time-placeholder" id="pomodoroTimeDisplay">25:00</p>
+                    <div class="pomodoro-controls">
+                        <button class="btn btn-icon-outline btn-sm" id="pomodoroStartBtn" aria-label="Start pomodoro timer">
+                            <i class="fa-solid fa-play"></i>
+                        </button>
+                        <button class="btn btn-icon-outline btn-sm" id="pomodoroPauseBtn" aria-label="Pause pomodoro timer">
+                            <i class="fa-solid fa-pause"></i>
+                        </button>
+                        <button class="btn btn-icon-outline btn-sm" id="pomodoroResetBtn" aria-label="Reset pomodoro timer">
+                            <i class="fa-solid fa-rotate-left"></i>
+                        </button>
+                    </div>
+                </article>
+
+            </aside>
+
+        </div>
+    </div>
+
+    <!-- ==================== MODALS ==================== -->
+
+    <!-- Modal: Add Habit -->
+    <dialog class="modal" id="addHabitModal" aria-labelledby="addHabitModalTitle">
+        <div class="modal-content">
+            <header class="modal-header">
+                <h2 class="modal-title" id="addHabitModalTitle">Add New Habit</h2>
+                <button class="modal-close-btn" aria-label="Close add habit dialog" data-modal-close="addHabitModal">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </header>
+            <form class="modal-form" id="addHabitForm">
+                <div class="form-group">
+                    <label for="addHabitName">Habit Name</label>
+                    <input type="text" id="addHabitName" name="habitName" placeholder="e.g. Drink Water" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="addHabitCategory">Category</label>
+                    <select id="addHabitCategory" name="category" required>
+                        <option value="" disabled selected>Select a category</option>
+                        <option value="health">Health</option>
+                        <option value="fitness">Fitness</option>
+                        <option value="learning">Learning</option>
+                        <option value="mindfulness">Mindfulness</option>
+                        <option value="nutrition">Nutrition</option>
+                        <option value="productivity">Productivity</option>
+                        <option value="personal-growth">Personal Growth</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <span class="form-group-label">Icon</span>
+                    <div class="icon-picker-placeholder" id="addHabitIconPicker" role="radiogroup" aria-label="Choose a habit icon">
+                        <button type="button" class="icon-picker-option" role="radio" aria-checked="true" aria-label="Water droplet icon"><i class="fa-solid fa-glass-water"></i></button>
+                        <button type="button" class="icon-picker-option" role="radio" aria-checked="false" aria-label="Running icon"><i class="fa-solid fa-person-running"></i></button>
+                        <button type="button" class="icon-picker-option" role="radio" aria-checked="false" aria-label="Book icon"><i class="fa-solid fa-book"></i></button>
+                        <button type="button" class="icon-picker-option" role="radio" aria-checked="false" aria-label="Spa icon"><i class="fa-solid fa-spa"></i></button>
+                        <button type="button" class="icon-picker-option" role="radio" aria-checked="false" aria-label="Carrot icon"><i class="fa-solid fa-carrot"></i></button>
+                        <button type="button" class="icon-picker-option" role="radio" aria-checked="false" aria-label="Pen icon"><i class="fa-solid fa-pen-nib"></i></button>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="addHabitColor">Color</label>
+                    <input type="color" id="addHabitColor" name="habitColor" value="#6c5ce7">
+                </div>
+
+                <div class="form-group">
+                    <label for="addHabitFrequency">Frequency</label>
+                    <select id="addHabitFrequency" name="frequency" required>
+                        <option value="daily">Daily</option>
+                        <option value="weekdays">Weekdays</option>
+                        <option value="weekends">Weekends</option>
+                        <option value="weekly">Weekly</option>
+                        <option value="custom">Custom</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="addHabitReminderTime">Reminder Time</label>
+                    <input type="time" id="addHabitReminderTime" name="reminderTime">
+                </div>
+
+                <div class="form-group">
+                    <label for="addHabitGoal">Goal</label>
+                    <input type="number" id="addHabitGoal" name="goal" min="1" placeholder="e.g. 8">
+                </div>
+
+                <div class="form-group">
+                    <label for="addHabitNotes">Notes</label>
+                    <textarea id="addHabitNotes" name="notes" rows="3" placeholder="Add any extra details..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <span class="form-group-label">Priority</span>
+                    <div class="priority-options" role="radiogroup" aria-label="Habit priority">
+                        <label class="priority-option">
+                            <input type="radio" name="priority" value="low">
+                            <span>Low</span>
+                        </label>
+                        <label class="priority-option">
+                            <input type="radio" name="priority" value="medium" checked>
+                            <span>Medium</span>
+                        </label>
+                        <label class="priority-option">
+                            <input type="radio" name="priority" value="high">
+                            <span>High</span>
+                        </label>
+                    </div>
+                </div>
+
+                <footer class="modal-footer">
+                    <button type="button" class="btn btn-outline" data-modal-close="addHabitModal" aria-label="Cancel adding habit">Cancel</button>
+                    <button type="submit" class="btn btn-primary" aria-label="Save new habit">Save Habit</button>
+                </footer>
+            </form>
+        </div>
+    </dialog>
+
+    <!-- Modal: Edit Habit -->
+    <dialog class="modal" id="editHabitModal" aria-labelledby="editHabitModalTitle">
+        <div class="modal-content">
+            <header class="modal-header">
+                <h2 class="modal-title" id="editHabitModalTitle">Edit Habit</h2>
+                <button class="modal-close-btn" aria-label="Close edit habit dialog" data-modal-close="editHabitModal">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </header>
+            <form class="modal-form" id="editHabitForm">
+                <div class="form-group">
+                    <label for="editHabitName">Habit Name</label>
+                    <input type="text" id="editHabitName" name="habitName" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="editHabitCategory">Category</label>
+                    <select id="editHabitCategory" name="category" required>
+                        <option value="health">Health</option>
+                        <option value="fitness">Fitness</option>
+                        <option value="learning">Learning</option>
+                        <option value="mindfulness">Mindfulness</option>
+                        <option value="nutrition">Nutrition</option>
+                        <option value="productivity">Productivity</option>
+                        <option value="personal-growth">Personal Growth</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <span class="form-group-label">Icon</span>
+                    <div class="icon-picker-placeholder" id="editHabitIconPicker" role="radiogroup" aria-label="Choose a habit icon"></div>
+                </div>
+
+                <div class="form-group">
+                    <label for="editHabitColor">Color</label>
+                    <input type="color" id="editHabitColor" name="habitColor">
+                </div>
+
+                <div class="form-group">
+                    <label for="editHabitFrequency">Frequency</label>
+                    <select id="editHabitFrequency" name="frequency" required>
+                        <option value="daily">Daily</option>
+                        <option value="weekdays">Weekdays</option>
+                        <option value="weekends">Weekends</option>
+                        <option value="weekly">Weekly</option>
+                        <option value="custom">Custom</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="editHabitReminderTime">Reminder Time</label>
+                    <input type="time" id="editHabitReminderTime" name="reminderTime">
+                </div>
+
+                <div class="form-group">
+                    <label for="editHabitGoal">Goal</label>
+                    <input type="number" id="editHabitGoal" name="goal" min="1">
+                </div>
+
+                <div class="form-group">
+                    <label for="editHabitNotes">Notes</label>
+                    <textarea id="editHabitNotes" name="notes" rows="3"></textarea>
+                </div>
+
+                <footer class="modal-footer">
+                    <button type="button" class="btn btn-outline" data-modal-close="editHabitModal" aria-label="Cancel editing habit">Cancel</button>
+                    <button type="submit" class="btn btn-primary" aria-label="Save changes to habit">Save Changes</button>
+                </footer>
+            </form>
+        </div>
+    </dialog>
+
+    <!-- Modal: Delete Confirmation -->
+    <dialog class="modal modal-small" id="deleteConfirmModal" aria-labelledby="deleteConfirmModalTitle">
+        <div class="modal-content">
+            <header class="modal-header">
+                <h2 class="modal-title" id="deleteConfirmModalTitle">Delete Habit?</h2>
+                <button class="modal-close-btn" aria-label="Close delete confirmation dialog" data-modal-close="deleteConfirmModal">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </header>
+            <div class="modal-body">
+                <p>Are you sure you want to delete this habit? This action cannot be undone and all progress history will be lost.</p>
+            </div>
+            <footer class="modal-footer">
+                <button type="button" class="btn btn-outline" data-modal-close="deleteConfirmModal" aria-label="Cancel deletion">Cancel</button>
+                <button type="button" class="btn btn-danger" id="confirmDeleteBtn" aria-label="Confirm habit deletion">Delete</button>
+            </footer>
+        </div>
+    </dialog>
+
+    <!-- Modal: Settings -->
+    <dialog class="modal" id="settingsModal" aria-labelledby="settingsModalTitle">
+        <div class="modal-content">
+            <header class="modal-header">
+                <h2 class="modal-title" id="settingsModalTitle">Settings</h2>
+                <button class="modal-close-btn" aria-label="Close settings dialog" data-modal-close="settingsModal">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </header>
+            <form class="modal-form" id="settingsForm">
+                <div class="form-group form-group-toggle">
+                    <label for="darkModeToggle">Dark Mode</label>
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="darkModeToggle" name="darkMode">
+                        <span class="toggle-slider" aria-hidden="true"></span>
+                    </label>
+                </div>
+
+                <div class="form-group form-group-toggle">
+                    <label for="notificationToggle">Notifications</label>
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="notificationToggle" name="notifications" checked>
+                        <span class="toggle-slider" aria-hidden="true"></span>
+                    </label>
+                </div>
+
+                <div class="form-group">
+                    <label for="reminderSoundSelect">Reminder Sound</label>
+                    <select id="reminderSoundSelect" name="reminderSound">
+                        <option value="chime">Chime</option>
+                        <option value="bell">Bell</option>
+                        <option value="ding">Ding</option>
+                        <option value="none">None</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="languageSelect">Language</label>
+                    <select id="languageSelect" name="language">
+                        <option value="en">English</option>
+                        <option value="es">Español</option>
+                        <option value="fr">Français</option>
+                        <option value="de">Deutsch</option>
+                        <option value="hi">हिन्दी</option>
+                    </select>
+                </div>
+
+                <div class="settings-data-actions">
+                    <button type="button" class="btn btn-outline" id="exportDataBtn" aria-label="Export your habit data">
+                        <i class="fa-solid fa-file-export"></i>
+                        <span>Export Data</span>
+                    </button>
+                    <button type="button" class="btn btn-outline" id="importDataBtn" aria-label="Import habit data">
+                        <i class="fa-solid fa-file-import"></i>
+                        <span>Import Data</span>
+                    </button>
+                    <button type="button" class="btn btn-danger" id="resetDataBtn" aria-label="Reset all habit data">
+                        <i class="fa-solid fa-trash-can"></i>
+                        <span>Reset Data</span>
+                    </button>
+                </div>
+
+                <footer class="modal-footer">
+                    <button type="button" class="btn btn-outline" data-modal-close="settingsModal" aria-label="Cancel settings changes">Cancel</button>
+                    <button type="submit" class="btn btn-primary" aria-label="Save settings">Save Settings</button>
+                </footer>
+            </form>
+        </div>
+    </dialog>
+
+    <!-- Modal: Journal Entry -->
+    <dialog class="modal" id="journalEntryModal" aria-labelledby="journalEntryModalTitle">
+        <div class="modal-content">
+            <header class="modal-header">
+                <h2 class="modal-title" id="journalEntryModalTitle">New Journal Entry</h2>
+                <button class="modal-close-btn" aria-label="Close journal entry dialog" data-modal-close="journalEntryModal">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </header>
+            <form class="modal-form" id="journalEntryForm">
+                <div class="form-group">
+                    <label for="journalEntryDate">Date</label>
+                    <input type="date" id="journalEntryDate" name="entryDate" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="journalEntryHabit">Linked Habit</label>
+                    <select id="journalEntryHabit" name="linkedHabit">
+                        <option value="">None</option>
+                        <option value="drink-water">Drink Water</option>
+                        <option value="morning-run">Morning Run</option>
+                        <option value="read-a-book">Read a Book</option>
+                        <option value="meditate">Meditate</option>
+                        <option value="no-junk-food">No Junk Food</option>
+                        <option value="journal-writing">Journal Writing</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <span class="form-group-label">Mood</span>
+                    <div class="mood-options" role="radiogroup" aria-label="Select mood for this entry">
+                        <label class="mood-option-btn">
+                            <input type="radio" name="mood" value="great" class="visually-hidden">
+                            <i class="fa-regular fa-face-laugh-beam"></i>
+                        </label>
+                        <label class="mood-option-btn">
+                            <input type="radio" name="mood" value="good" class="visually-hidden" checked>
+                            <i class="fa-regular fa-face-smile"></i>
+                        </label>
+                        <label class="mood-option-btn">
+                            <input type="radio" name="mood" value="okay" class="visually-hidden">
+                            <i class="fa-regular fa-face-meh"></i>
+                        </label>
+                        <label class="mood-option-btn">
+                            <input type="radio" name="mood" value="tired" class="visually-hidden">
+                            <i class="fa-regular fa-face-tired"></i>
+                        </label>
+                        <label class="mood-option-btn">
+                            <input type="radio" name="mood" value="sad" class="visually-hidden">
+                            <i class="fa-regular fa-face-frown"></i>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="journalEntryNotes">Notes</label>
+                    <textarea id="journalEntryNotes" name="notes" rows="5" placeholder="Write about your day..."></textarea>
+                </div>
+
+                <footer class="modal-footer">
+                    <button type="button" class="btn btn-outline" data-modal-close="journalEntryModal" aria-label="Cancel journal entry">Cancel</button>
+                    <button type="submit" class="btn btn-primary" aria-label="Save journal entry">Save Entry</button>
+                </footer>
+            </form>
+        </div>
+    </dialog>
+
+    <!-- Modal: Achievement Details -->
+    <dialog class="modal modal-small" id="achievementDetailsModal" aria-labelledby="achievementDetailsModalTitle">
+        <div class="modal-content">
+            <header class="modal-header">
+                <h2 class="modal-title" id="achievementDetailsModalTitle">Achievement Details</h2>
+                <button class="modal-close-btn" aria-label="Close achievement details dialog" data-modal-close="achievementDetailsModal">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </header>
+            <div class="modal-body achievement-details-body">
+                <div class="achievement-icon-box achievement-details-icon">
+                    <i class="fa-solid fa-fire-flame-curved"></i>
+                </div>
+                <h3 class="achievement-details-title">30 Day Streak</h3>
+                <p class="achievement-details-description">A full month of unbroken consistency on a single habit. Keep the fire burning!</p>
+                <p class="achievement-details-date">Unlocked on July 1, 2026</p>
+            </div>
+            <footer class="modal-footer">
+                <button type="button" class="btn btn-primary" data-modal-close="achievementDetailsModal" aria-label="Close achievement details">Close</button>
+            </footer>
+        </div>
+    </dialog>
+
+    <!-- ==================== FOOTER ==================== -->
+    <footer class="app-footer" id="appFooter">
+        <div class="footer-content">
+            <p class="footer-version">HabitFlow v2.4.1</p>
+            <p class="footer-copyright">&copy; 2026 HabitFlow. All rights reserved.</p>
+            <nav class="footer-links" aria-label="Footer links">
+                <a href="#privacy-policy" class="footer-link">Privacy Policy</a>
+                <a href="#terms" class="footer-link">Terms</a>
+                <a href="#github" class="footer-link footer-github-link" aria-label="View HabitFlow source on GitHub">
+                    <i class="fa-brands fa-github"></i>
+                    <span>GitHub</span>
+                </a>
+            </nav>
+        </div>
+    </footer>
+
+    <!-- Application Logic -->
+    <script src="script.js" defer></script>
+</body>
+</html>
