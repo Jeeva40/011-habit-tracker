@@ -3,7 +3,7 @@
  * HabitSystems — Premium Habit Tracker
  * ----------------------------------------------------------------------------
  * A single-file, framework-free ES6+ application layer that powers the
- * HabitFlow markup (index.html) and stylesheet (style.css).
+ * HabitSystems markup (index.html) and stylesheet (style.css).
  *
  * Architecture: a set of small, focused modules (namespaced object literals
  * and classes) composed together by a single App bootstrapper at the bottom
